@@ -19,7 +19,8 @@
             
             <Label Text="Description" FontSize="Medium" />
             <Editor Text="{Binding Item.Description}" d:Text="Item description" FontSize="Small" Margin="0" />
-
+            
+            <Label Text="Value" FontSize="Medium" />
             <StackLayout
                 Orientation="Horizontal">
                 <Stepper Value="{Binding Data.Value, Mode=TwoWay}"
