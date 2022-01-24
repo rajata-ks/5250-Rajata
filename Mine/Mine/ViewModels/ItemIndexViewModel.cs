@@ -12,19 +12,19 @@ namespace Mine.ViewModels
 {
     public class ItemIndexViewModel : BaseViewModel
     {
-        public ObservableCollection<ItemModel> Items { get; set; }
+        public ObservableCollection<ItemModel> DataSet { get; set; }
         public Command LoadItemsCommand { get; set; }
 
         public ItemIndexViewModel()
         {
             Title = "Items";
-            Items = new ObservableCollection<ItemModel>();
+            DataSet = new ObservableCollection<ItemModel>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             MessagingCenter.Subscribe<ItemCreatePage, ItemModel>(this, "AddItem", async (obj, item) =>
             {
                 var newItem = item as ItemModel;
-                Items.Add(newItem);
+                DataSet.Add(newItem);
                 await DataStore.CreateAsync(newItem);
             });
         }
@@ -41,6 +41,28 @@ namespace Mine.ViewModels
 
         }
 
+        /// <summary>
+        /// Delete the record from the system 
+        /// </summary>
+        /// <param name="data">The record to Delete</param>
+        /// <returns>True if Deleted</returns>
+        public async Task<bool> DeleteAsync (ItemModel data)
+        {
+            //Check if the record exsits, if it does not , then null is returned 
+            var record = await ReadAsync(data.Id);
+            if(record == null)
+            {
+                return false;
+            }
+            //Remove from the local data set cache 
+            DataSet.Remove(data);
+
+            //Call to remove it from the Data store 
+            var Result = await DataStore.DeleteAsync(data.Id);
+            
+            return Result;
+        }
+
         async Task ExecuteLoadItemsCommand()
         {
             if (IsBusy)
@@ -50,11 +72,11 @@ namespace Mine.ViewModels
 
             try
             {
-                Items.Clear();
+                DataSet.Clear();
                 var items = await DataStore.IndexAsync(true);
                 foreach (var item in items)
                 {
-                    Items.Add(item);
+                    DataSet.Add(item);
                 }
             }
             catch (Exception ex)
