@@ -1,11 +1,13 @@
-﻿using System;
+﻿using SQLite;
+using System;
 
 namespace Mine.Models
 {
     public class ItemModel
     {
         //The ID for the Item
-        public string Id { get; set; }
+        [PrimaryKey]
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         //The Display text for the Item
         public string Text { get; set; }
