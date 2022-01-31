@@ -33,7 +33,7 @@ namespace Mine.Services
             }
         }
 
-       
+        //InsertAsync will write to the table and it returns the ID of what was written
         public async Task<bool> CreateAsync(ItemModel item)
         {
             if(item==null)
@@ -41,7 +41,6 @@ namespace Mine.Services
                 return false;
             }
 
-            //InsertAsync will write to the table and it returns the ID of what was written
             var result = await Database.InsertAsync(item);
             if (result == 0)
             {
@@ -50,6 +49,8 @@ namespace Mine.Services
             return true;
         }
 
+
+        //UpdateAsync will update item in the table 
         public async Task<bool> UpdateAsync(ItemModel item)
         {
             if (item == null)
@@ -57,7 +58,6 @@ namespace Mine.Services
                 return false;
             }
 
-            //UpdateAsync will update item in the table 
             var result = await Database.UpdateAsync(item);
             if (result == 0)
             {
@@ -66,9 +66,21 @@ namespace Mine.Services
             return true;
         }
 
-        public Task<bool> DeleteAsync(string id)
+        //DeleteAsync will delete an item from the table given id 
+        public async Task<bool> DeleteAsync(string id)
         {
-            throw new NotImplementedException();
+            var data = await ReadAsync(id);
+            if (data == null)
+            {
+                return false;
+            }
+
+            var result = await Database.DeleteAsync(data);
+            if (result == 0)
+            {
+                return false;
+            }
+            return true;
         }
 
         public Task<ItemModel> ReadAsync(string id)
