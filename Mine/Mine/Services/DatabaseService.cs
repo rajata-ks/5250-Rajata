@@ -33,7 +33,7 @@ namespace Mine.Services
             }
         }
 
-        //InsertAsync will write to the table and it returns the ID of what was written
+        ///CreateAsync will write to the table and it returns the ID of what was written
         public async Task<bool> CreateAsync(ItemModel item)
         {
             if(item==null)
@@ -41,6 +41,7 @@ namespace Mine.Services
                 return false;
             }
 
+            //InsertAsync will write to the table 
             var result = await Database.InsertAsync(item);
             if (result == 0)
             {
@@ -50,7 +51,7 @@ namespace Mine.Services
         }
 
 
-        //UpdateAsync will update item in the table 
+        ///UpdateAsync will update item in the table 
         public async Task<bool> UpdateAsync(ItemModel item)
         {
             if (item == null)
@@ -58,6 +59,7 @@ namespace Mine.Services
                 return false;
             }
 
+            //UpdateAsync will update an item in the table 
             var result = await Database.UpdateAsync(item);
             if (result == 0)
             {
@@ -66,7 +68,7 @@ namespace Mine.Services
             return true;
         }
 
-        //DeleteAsync will delete an item from the table given id 
+        ///DeleteAsync will delete an item from the table given id 
         public async Task<bool> DeleteAsync(string id)
         {
             var data = await ReadAsync(id);
@@ -75,6 +77,7 @@ namespace Mine.Services
                 return false;
             }
 
+           //DeleteAsync will delete an item from the table given id 
             var result = await Database.DeleteAsync(data);
             if (result == 0)
             {
@@ -83,6 +86,7 @@ namespace Mine.Services
             return true;
         }
 
+        ///ReadAsync will Read details of an item from the table given id 
         public Task<ItemModel> ReadAsync(string id)
         {
             if (id == null)
@@ -96,6 +100,7 @@ namespace Mine.Services
             return result;
         }
 
+        ///IndexAsync will retrive item list  
         public async Task<IEnumerable<ItemModel>> IndexAsync(bool forceRefresh = false)
         {
             var result = await Database.Table<ItemModel>().ToListAsync(); 
