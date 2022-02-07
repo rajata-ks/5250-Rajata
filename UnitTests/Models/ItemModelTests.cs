@@ -7,7 +7,7 @@ using System.Text;
 namespace UnitTests.Models
 {
     [TestFixture]
-    class ItemModelTests
+    public class ItemModelTests
     {
         [Test]
         public void ItemModel_Constructor_Valid_Default_Shoud_Pass()
