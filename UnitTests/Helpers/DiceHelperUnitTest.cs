@@ -14,13 +14,11 @@ namespace UnitTests.Helpers
             //Arrange
 
             //Act
-
             var result = DiceHelper.RollDice(0, 1);
 
             // Reset
 
             //Assert
-
             Assert.AreEqual(0, result);
         }    
     }
