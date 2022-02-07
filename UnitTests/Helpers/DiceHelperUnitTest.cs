@@ -62,13 +62,13 @@ namespace UnitTests.Helpers
             //Arrange
 
             //Act
-            var result = DiceHelper.RollDice(2, 12);
+            var result = DiceHelper.RollDice(2, 6);
 
             // Reset
 
             //Assert
-            Assert.AreEqual(true, result >= 2);
-            Assert.AreEqual(true, result <= 12);
+            Assert.AreEqual(true, result >=2);
+            Assert.AreEqual(true, result <=12);
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace UnitTests.Helpers
 
         }
 
-        
-        }
+        [Test]
+    
     }
 }
